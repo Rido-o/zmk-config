@@ -68,6 +68,22 @@
         };
 
         layer_1 {
+          // -----------------------------------------------------------------------------------------
+          // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
+          // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
+          // | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
+          //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+          bindings = <
+            &trans  &trans    &trans  &trans    &trans    &trans           &trans     &trans     &trans     &trans    &trans    &trans
+            &trans  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT        &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &trans
+            &trans  &trans    &trans  &trans    &trans    &trans           &trans     &kp MINUS  &kp EQUAL  &kp GRAVE &kp SEMI  &trans
+            &trans  &trans    &trans  &trans    &trans    &trans           &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
+            &trans    &trans    &kp BACKSPACE    &trans     &trans     &trans
+          >;
+        };
+
+        layer_2 {
             // -----------------------------------------------------------------------------------------
             // |  TAB |  F1 |  F2 |  F3 |  F4 |  F5 |   |  F6 |  F7 |  F8 |  F9 | F10 | BKSP |
             // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
@@ -81,22 +97,6 @@
 &trans  &trans        &trans        &trans        &trans        &trans           &trans     &kp LEFT   &kp DOWN   &kp UP         &kp RIGHT     &trans 
 &trans  &kp GRAVE     &kp EQUAL     &trans        &trans        &trans           &kp SLASH  &kp MINUS  &kp LBRC   &kp RBRC       &kp BSLH      &trans
                                     &trans        &trans        &trans           &trans     &trans     &trans
-            >;
-        };
-
-        layer_2 {
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
-            // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
-            // | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-            //                    | GUI |     | SPC |   | ENT |     | ALT |
-
-            bindings = <
-&trans  &trans    &trans  &trans    &trans    &trans           &trans     &trans     &trans     &trans    &trans    &trans
-&trans  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT        &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &trans
-&trans  &trans    &trans  &trans    &trans    &trans           &trans     &kp MINUS  &kp EQUAL  &kp GRAVE &kp SEMI  &trans
-&trans  &trans    &trans  &trans    &trans    &trans           &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
-                          &trans    &trans    &kp BACKSPACE    &trans     &trans     &trans
             >;
         };
 

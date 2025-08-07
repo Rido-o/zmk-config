@@ -14,7 +14,7 @@ This keyboard supports ZMK Studio for real-time keymap editing. To access Studio
 2. Press the **Studio Unlock** combo: Press and hold both thumb keys on one half simultaneously
    - Left half: Bottom-left and bottom-center thumb keys
    - Right half: Bottom-right and bottom-center thumb keys
-3. Open [ZMK Studio](https://studio.zmk.dev) in your browser
+3. Download and open the [ZMK Studio desktop app](https://github.com/zmkfirmware/zmk-studio/releases)
 4. Your keyboard should appear and be ready for editing
 
 ### Online Keymap Editor

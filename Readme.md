@@ -2,6 +2,8 @@
 
 Much of the code for this comes from <https://github.com/juhakaup/zmk-cygnus-4x6>
 
+Keymap is based on [Peter J's keymap](https://keymapdb.com/keymaps/peterxjang/)
+
 ## Keymap Editing
 
 ### ZMK Studio (Recommended)

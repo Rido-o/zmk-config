@@ -3,7 +3,7 @@ id: cygnus
 name: Cygnus
 type: shield
 url: https://github.com/juhakaup/keyboards/tree/main/Cygnus%20v1.0
-requires: [pro_micro]
+requires: [seeeduino_xiao_ble]
 exposes: [i2c_oled]
 features:
   - keys

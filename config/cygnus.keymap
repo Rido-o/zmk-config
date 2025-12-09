@@ -60,7 +60,7 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp ESC         &kp N1           &kp N2           &kp N3               &kp N4             &kp N5           &kp N6       &kp N7              &kp N8                &kp N9            &kp N0            &kp BSPC
+&kp ESC         &kp N1           &kp N2           &kp N3               &kp N4             &kp N5           &kp N6       &kp N7              &kp N8                &kp N9            &kp N0            &kp BACKSPACE
 &kp GRAVE       &kp B            &kp F            &kp L                &kp K              &kp Q            &kp P        &kp G               &kp O                 &kp U             &kp DOT           &kp ENTER
 &tog 1          &hml LEFT_GUI N  &hml LEFT_ALT S  &hml LEFT_CONTROL H  &hml LEFT_SHIFT T  &kp M            &kp C        &hmr RIGHT_SHIFT Y  &hmr RIGHT_CONTROL A  &hmr RIGHT_ALT E  &hmr RIGHT_GUI I  &mt RSHIFT SQT
 &kp LEFT_SHIFT  &kp X            &kp V            &kp J                &kp D              &kp Z            &kp SQT      &kp W               &kp SLASH             &kp SEMI          &kp COMMA         &kp RIGHT_SHIFT

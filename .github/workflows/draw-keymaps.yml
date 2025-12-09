@@ -18,5 +18,6 @@ jobs:
       config_path: "keymap_drawer/config.yaml"  # config file, ignored if not exists
       output_folder: "keymap-drawer"            # path to save produced SVG and keymap YAML files
       draw_args: ""   # map of extra args to pass to `keymap draw`, e.g. "corne:'-k corne_rotated' cradio:'-k paroxysm'"
+      parse_args: "cygnus:'-d boards/shields/cygnus/cygnus.dtsi'"
       amend_commit: true
       json_path: keymap-drawer/layouts

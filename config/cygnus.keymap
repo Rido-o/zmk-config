@@ -48,29 +48,6 @@
         };
     };
 
-    macros {
-        ScreenshotAreaClipboard: ScreenshotAreaClipboard {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LG(LC(LS(NUMBER_4)))>;
-            label = "SCREENSHOTAREACLIPBOARD";
-        };
-
-        ScreenshotAreaFile: ScreenshotAreaFile {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LG(LS(NUMBER_4))>;
-            label = "SCREENSHOTAREAFILE";
-        };
-
-        ScreenRecord: ScreenRecord {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LG(LS(N5))>;
-            label = "SCREENRECORD";
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -83,11 +60,11 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp GRAVE  &kp N1  &kp N2            &kp N3            &lt 3 NUMBER_4       &kp N5           &kp N6       &kp N7                &kp N8            &kp N9            &kp N0            &kp BSPC
-&tog 1     &kp Q   &kp W             &kp E             &kp R                &kp T            &kp Y        &kp U                 &kp I             &kp O             &kp P             &kp ENTER
-&tog 2     &kp A   &hml RIGHT_ALT S  &hml LEFT_GUI D   &hml LEFT_SHIFT F    &kp G            &kp H        &hmr RIGHT_SHIFT J    &hmr RIGHT_GUI K  &hmr RIGHT_ALT L  &mt RSHIFT SEMI   &mt RSHIFT SQT
-&tog 3     &kp Z   &kp X             &kp C             &hml LEFT_CONTROL V  &kp B            &kp N        &hmr RIGHT_CONTROL M  &kp COMMA         &kp DOT           &mt RSHIFT SLASH  &mt RIGHT_SHIFT BSLH
-                                     &mt LEFT_ALT ESC  &mt RIGHT_GUI SPACE  &mt LCTRL TAB    &lt 3 ENTER  &lt 1 SPACE           &lt 2 BACKSPACE
+&kp ESC         &kp N1           &kp N2           &kp N3            &kp N4               &kp N5           &kp N6       &kp N7                &kp N8             &kp N9            &kp N0            &kp BSPC
+&kp GRAVE       &kp B            &kp F            &kp L             &kp K                &kp Q            &kp P        &kp G                 &kp O              &kp U             &kp DOT           &kp ENTER
+&tog 1          &hml LEFT_GUI N  &hml LEFT_ALT S  &hml LEFT_CTRL H  &hml LEFT_SHIFT T    &kp M            &kp C        &hmr RIGHT_SHIFT Y    &hmr RIGHT_CTRL A  &hmr RIGHT_ALT E  &hmr RIGHT_GUI I  &mt RSHIFT SQT
+&kp LEFT_SHIFT  &kp X            &kp V            &kp J             &hml LEFT_CONTROL D  &kp Z            &kp SQT      &hmr RIGHT_CONTROL W  &kp SLASH          &kp SEMI          &mt RSHIFT COMMA  &mt RIGHT_SHIFT BSLH
+                                                  &kp ESC           &kp R                &lt 1 BACKSPACE  &lt 2 ENTER  &kp SPACE             &kp tab
             >;
         };
 
@@ -116,13 +93,23 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&trans  &kp F1           &kp F2       &kp F3          &kp F4            &kp F5         &kp F6                &kp F7                &kp F8             &kp F9                &kp F10                &kp F11
-&trans  &kp EXCLAMATION  &kp AT_SIGN  &kp HASH        &kp DOLLAR        &kp PERCENT    &kp CARET             &kp AMPERSAND         &kp STAR           &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp F12
-&trans  &trans           &trans       &trans          &trans            &trans         &kp LEFT              &kp DOWN              &kp UP             &kp RIGHT             &trans                 &trans
-&trans  &kp GRAVE        &kp EQUAL    &kp C_PREVIOUS  &kp C_PLAY_PAUSE  &kp C_NEXT     &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp BSLH               &trans
-                                      &trans          &trans            &trans         &trans                &trans                &trans
+&trans  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6    &kp F7    &kp F8        &kp F9     &kp F10  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans        &trans     &trans   &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT  &kp DOWN  &kp UP_ARROW  &kp RIGHT  &trans   &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans        &trans     &trans   &trans
+                        &trans  &trans  &trans  &trans    &trans    &trans
             >;
         };
+
+//         layer_2 {
+//             bindings = <
+// &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+// &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+// &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+// &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+//                         &trans  &trans  &trans  &trans  &trans  &trans
+//             >;
+//         };
 
         bluetooth {
             bindings = <
@@ -131,16 +118,6 @@
 &trans        &trans        &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &trans        &trans  &trans  &trans  &trans  &trans  &trans
 &bootloader   &trans        &trans          &trans          &trans           &trans        &trans  &trans  &trans  &trans  &trans  &trans
                                             &trans          &trans           &trans        &trans  &trans  &trans
-            >;
-        };
-
-        Macros {
-            bindings = <
-&trans  &ScreenshotAreaClipboard  &ScreenshotAreaFile  &ScreenRecord   &trans           &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans                    &mkp LCLK            &mmv MOVE_UP    &mkp RCLK        &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans                    &mmv MOVE_LEFT       &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans                    &trans               &trans          &trans           &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                                                       &trans          &trans           &trans    &trans  &trans  &trans
             >;
         };
     };

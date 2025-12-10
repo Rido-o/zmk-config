@@ -1,2 +1,0 @@
-parse_config:
-  zmk_additional_includes: ["boards/shields/cygnus/cygnus.dtsi"]

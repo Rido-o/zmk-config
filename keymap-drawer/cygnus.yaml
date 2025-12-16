@@ -177,7 +177,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - '&bootloader'
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - '&mkp LCLK'
@@ -202,7 +202,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: '&bootloader', type: held}
+  - {type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -215,10 +215,10 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - '&sys_reset'
+  - '&bootloader'
+  - '&bootloader'
+  - '&sys_reset'
   - {t: ▽, type: trans}
   gaming:
   - {t: ▽, type: trans}
@@ -280,3 +280,5 @@ combos:
   k: bluetooth
 - p: [48, 53]
   k: {t: gaming, h: toggle}
+- p: [42, 47]
+  k: bluetooth

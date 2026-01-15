@@ -16,7 +16,7 @@
             key-positions = <41 36>;
         };
 
-        gaming {
+        qwerty {
             bindings = <&tog 4>;
             key-positions = <48 53>;
         };
@@ -24,6 +24,11 @@
         bluetooth_2 {
             bindings = <&mo 3>;
             key-positions = <42 47>;
+        };
+
+        gaming {
+            bindings = <&tog 5>;
+            key-positions = <36 47>;
         };
     };
 
@@ -114,13 +119,23 @@
             >;
         };
 
-        gaming {
+        qwerty {
             bindings = <
 &trans   &trans  &trans  &trans  &trans     &trans       &trans    &trans  &trans     &trans   &trans    &trans
 &kp TAB  &kp Q   &kp W   &kp E   &kp R      &kp T        &kp Y     &kp U   &kp I      &kp O    &kp P     &trans
 &trans   &kp A   &kp S   &kp D   &kp F      &kp G        &kp H     &kp J   &kp K      &kp L    &kp SEMI  &trans
 &trans   &kp Z   &kp X   &kp C   &kp V      &kp B        &kp N     &kp M   &kp COMMA  &kp DOT  &kp FSLH  &trans
                          &trans  &kp SPACE  &kp LCTRL    &kp BSPC  &trans  &trans
+            >;
+        };
+
+        gaming {
+            bindings = <
+&trans  &trans     &trans  &trans  &trans     &trans       &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans  &trans  &trans     &trans       &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &kp A   &kp W   &kp D      &kp E        &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp LSHFT  &trans  &kp S   &trans     &trans       &trans  &trans  &trans  &trans  &trans  &trans
+                           &trans  &kp SPACE  &kp LCTRL    &trans  &trans  &trans
             >;
         };
     };

@@ -1,6 +1,6 @@
 layout: {zmk_keyboard: cygnus}
 layers:
-  default:
+  Base:
   - ESC
   - '1'
   - '2'
@@ -51,11 +51,11 @@ layers:
   - RIGHT SHIFT
   - ESC
   - R
-  - {t: BACKSPACE, h: symbols}
-  - {t: ENTER, h: navigation}
+  - {t: BACKSPACE, h: Symbols}
+  - {t: ENTER, h: Navigation}
   - SPACE
   - TAB
-  symbols:
+  Symbols:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -110,7 +110,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  navigation:
+  Navigation:
   - {t: ▽, type: trans}
   - F1
   - F2
@@ -165,7 +165,7 @@ layers:
   - {type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  bluetooth:
+  Bluetooth:
   - {t: BT, h: '0'}
   - {t: BT, h: '1'}
   - {t: BT, h: '2'}
@@ -220,7 +220,7 @@ layers:
   - '&bootloader'
   - '&sys_reset'
   - {t: ▽, type: trans}
-  qwerty:
+  Qwerty:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -275,7 +275,7 @@ layers:
   - BSPC
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  gaming:
+  Gaming:
   - {t: ▽, type: trans}
   - ''
   - ''
@@ -332,10 +332,10 @@ layers:
   - {t: ▽, type: trans}
 combos:
 - p: [41, 36]
-  k: bluetooth
+  k: Bluetooth
 - p: [48, 53]
-  k: {t: qwerty, h: toggle}
+  k: {t: Qwerty, h: toggle}
 - p: [42, 47]
-  k: bluetooth
+  k: Bluetooth
 - p: [36, 47]
-  k: {t: gaming, h: toggle}
+  k: {t: Gaming, h: toggle}

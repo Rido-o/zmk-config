@@ -72,7 +72,7 @@
             // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
             // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
-
+            display-name = "Base";
             bindings = <
 &kp ESC         &kp N1           &kp N2           &kp N3               &kp N4             &kp N5             &kp N6       &kp N7              &kp N8                &kp N9            &kp N0            &kp DEL
 &kp GRAVE       &kp B            &kp F            &kp L                &kp K              &kp Q              &kp P        &kp G               &kp O                 &kp U             &kp DOT           &kp BACKSLASH
@@ -83,6 +83,7 @@
         };
 
         symbols {
+            display-name = "Symbols";
             bindings = <
 &trans  &trans           &trans         &trans            &trans     &trans           &trans       &trans                &trans                 &trans      &trans             &trans
 &trans  &kp GRAVE        &kp LESS_THAN  &kp GREATER_THAN  &kp MINUS  &kp PIPE         &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR  &kp UNDERSCORE     &trans
@@ -100,6 +101,7 @@
             // | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
+            display-name = "Navigation";
             bindings = <
 &trans  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5    &kp F6    &kp F7    &kp F8  &kp F9     &kp F10  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans  &trans     &trans   &trans
@@ -110,6 +112,7 @@
         };
 
         bluetooth {
+            display-name = "Bluetooth";
             bindings = <
 &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2    &bt BT_SEL 3    &studio_unlock   &bt BT_CLR     &trans       &trans      &trans  &trans  &trans  &bootloader
 &trans        &trans        &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &trans         &trans       &trans      &trans  &trans  &trans  &trans
@@ -120,6 +123,7 @@
         };
 
         qwerty {
+            display-name = "Qwerty";
             bindings = <
 &trans   &trans  &trans  &trans  &trans     &trans       &trans    &trans  &trans     &trans   &trans    &trans
 &kp TAB  &kp Q   &kp W   &kp E   &kp R      &kp T        &kp Y     &kp U   &kp I      &kp O    &kp P     &trans
@@ -130,6 +134,7 @@
         };
 
         gaming {
+            display-name = "Gaming";
             bindings = <
 &trans   &none      &none   &none   &none      &none        &trans  &trans  &trans  &trans  &trans  &trans
 &kp TAB  &kp N1     &kp N2  &kp N3  &kp N4     &kp N5       &trans  &trans  &trans  &trans  &trans  &trans

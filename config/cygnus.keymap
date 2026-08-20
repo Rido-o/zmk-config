@@ -5,7 +5,7 @@
 
 &mt { quick-tap-ms = <150>; };
 
-&lt { quick-tap-ms = <200>; };
+&lt { quick-tap-ms = <220>; };
 
 / {
     combos {

@@ -189,8 +189,9 @@ KEYS_LEGEND.update({
     "TILDE": ("~", "symbol"), "COLON": (":", "symbol"), "DOUBLE_QUOTES": ('"', "symbol"), "DQT": ('"', "symbol"),
     "LESS_THAN": ("<", "symbol"), "LT": ("<", "symbol"), "GREATER_THAN": (">", "symbol"), "GT": (">", "symbol"),
     "LEFT_BRACE": ("{", "symbol"), "LBRC": ("{", "symbol"), "RIGHT_BRACE": ("}", "symbol"), "RBRC": ("}", "symbol"),
-    "PIPE": ("|", "symbol"),
+    "PIPE": ("|", "symbol"), "QUESTION": ("?", "symbol"), "QMARK": ("?", "symbol"),
 })
+MACROS = {"arrow": "->", "fat_arrow": "=>"}  # the keymap's macros, drawn as what they type
 
 
 def legend(code):
@@ -238,6 +239,8 @@ def describe(binding, layer_names):
         key["main"], key["kind"] = "Caps Word", "edit"
     elif name == "studio_unlock":
         key["main"], key["kind"] = "Studio", "system"
+    elif name in MACROS:
+        key["main"], key["kind"] = MACROS[name], "symbol"
     elif name == "out":
         key["main"], key["kind"] = "USB/BT", "system"
     else:

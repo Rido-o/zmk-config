@@ -234,6 +234,8 @@ def describe(binding, layer_names):
         key["main"], key["kind"] = "BOOT", "boot"
     elif name == "sys_reset":
         key["main"], key["kind"] = "Reset", "boot"
+    elif name == "caps_word":
+        key["main"], key["kind"] = "Caps Word", "edit"
     elif name == "studio_unlock":
         key["main"], key["kind"] = "Studio", "system"
     elif name == "out":

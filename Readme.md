@@ -1,19 +1,37 @@
 # Dactyl Cygnus 4x6
 
+ZMK config for a wireless split Dactyl Cygnus 4x6 (Seeed XIAO BLE in each half), using a
+[Prospector](https://github.com/carrefinho/prospector-zmk-module) as a dongle.
+
 Much of the code for this comes from <https://github.com/juhakaup/zmk-cygnus-4x6>
+
+## Firmware
+
+Firmware is built by GitHub Actions on every push. Download it from the [Actions tab](../../actions).
+
+| Build | Flash to |
+| --- | --- |
+| `cygnus_dongle prospector_adapter` | The Prospector dongle (BLE central, connects to the host over USB/BT) |
+| `cygnus_left` / `cygnus_right` | Each keyboard half (BLE peripherals) |
+| `settings_reset` | Any device, to wipe its pairing/settings before reflashing |
+| `tester_xiao` | A XIAO, for testing the switch wiring |
+
+The halves only work with the dongle. If they won't connect after flashing,
+flash `settings_reset` to all three devices, then reflash the normal firmware.
 
 ## Keymap Editing
 
+The keymap lives in `config/cygnus.keymap`. A rendered diagram is regenerated
+automatically in `keymap-drawer/cygnus.svg`.
+
 ### ZMK Studio (Recommended)
 
-This keyboard supports ZMK Studio for real-time keymap editing. To access Studio mode:
+Studio is enabled on the dongle only.
 
-1. Connect the keyboard via USB
-2. Press the **Studio Unlock** combo: Press and hold both thumb keys on one half simultaneously
-   - Left half: Bottom-left and bottom-center thumb keys
-   - Right half: Bottom-right and bottom-center thumb keys
-3. Download and open the [ZMK Studio desktop app](https://github.com/zmkfirmware/zmk-studio/releases)
-4. Your keyboard should appear and be ready for editing
+1. Connect the dongle via USB
+2. Unlock Studio: hold the Bluetooth layer combo (`Shift` + `Z` on the left, or `'` + `Shift` on the right)
+   and press the `Studio Unlock` key (top row, 5th from the left)
+3. Open [ZMK Studio](https://zmk.studio/) (web or desktop app) and connect to the keyboard
 
 ### Online Keymap Editor
 

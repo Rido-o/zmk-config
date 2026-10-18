@@ -67,11 +67,14 @@
 
         default_layer {
             // -----------------------------------------------------------------------------------------
-            // |  ESC |  1  |  2  |  3  |  4  |  5  |   |  6  |  7   |  8  |  9  |  0  |  ?   |
-            // |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
-            // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
-            // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
-            //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
+            // |  ESC |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | DEL  |
+            // |   `  |  B  |  F  |  L  |  K  |  Q  |   |  P  |  G  |  O  |  U  |  .  |  \   |
+            // |  GUI |  N  |  S  |  H  |  T  |  M  |   |  C  |  Y  |  A  |  E  |  I  | ENT  |
+            // | SHFT |  X  |  V  |  J  |  D  |  Z  |   |  '  |  W  |  /  |  ;  |  ,  | SHFT |
+            //                    | ESC |  R  | BSPC|   | ENT | SPC | TAB |
+            //
+            // Home row mods: N=GUI S=ALT H=CTRL T=SHFT | Y=SHFT A=CTRL E=ALT I=GUI
+            // BSPC hold = Symbols, ENT hold = Navigation
 
             display-name = "Base";
             bindings = <
@@ -96,11 +99,11 @@
 
         navigation {
             // -----------------------------------------------------------------------------------------
-            // |  TAB |  F1 |  F2 |  F3 |  F4 |  F5 |   |  F6 |  F7 |  F8 |  F9 | F10 | BKSP |
-            // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
-            // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
-            // | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
-            //                    | GUI |     | SPC |   | ENT |     | ALT |
+            // |      |  F1 |  F2 |  F3 |  F4 |  F5 |   |  F6 |  F7 |  F8 |  F9 | F10 |      |
+            // |      |     |     |     |     |     |   |     |     |     |     |     |      |
+            // |      |     |     |     |     |     |   | LFT | DWN |  UP | RGT |     |      |
+            // |      |     |     |     |     |     |   |     |     |     |     |     |      |
+            //                    |     |     |     |   |     |     |     |
 
             display-name = "Navigation";
             bindings = <

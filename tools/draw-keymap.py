@@ -496,38 +496,8 @@ def how_to_reach(index, base, layer_names, combos):
     return "", [], None
 
 
-BRACKET_H = 56  # room under the board for the combo brackets
-
-
-def layer_height(index, combos):
-    """A layer card's height: taller when it has combo brackets under it."""
-    return LAYER_HEAD + BOARD_H + 24 + (BRACKET_H if any(c[2] == index for c in combos) else 0)
-
-
-def draw_combo_bracket(cv, positions, label, bx, by):
-    """A bracket from each of the combo's keys down to a bar under the whole
-    board, labelled underneath. Drawn before the keys, so where a leg passes
-    behind another key (the thumbs) it shows only in the gaps."""
-    c = cv.c
-    xs = [key_center(p, bx, by)[0] for p in positions]
-    ys = [key_center(p, bx, by)[1] for p in positions]
-    yb = by + BOARD_H + 14
-    c.set_source_rgb(*LAYER_PILL[0])
-    c.set_line_width(2.4)
-    c.set_line_join(cairo.LINE_JOIN_ROUND)
-    c.move_to(xs[0], ys[0])
-    c.line_to(xs[0], yb)
-    c.line_to(xs[-1], yb)
-    c.line_to(xs[-1], ys[-1])
-    for x, y in zip(xs[1:-1], ys[1:-1]):
-        c.move_to(x, y)
-        c.line_to(x, yb)
-    c.stroke()
-    cv.text((min(xs) + max(xs)) / 2, yb + 24, label, 16, LAYER_PILL[0], True)
-
-
 def draw_layer(cv, index, name, bindings, layer_names, base, combos, ox, oy, width):
-    card_h = layer_height(index, combos)
+    card_h = LAYER_HEAD + BOARD_H + 24
     cv.box(PAD, oy, width - 2 * PAD, card_h, 18, CARD, RULE, 1.5)
     # title
     cv.text(PAD + 30, oy + 52, name.upper(), 34, INK, True, align="left")
@@ -536,10 +506,6 @@ def draw_layer(cv, index, name, bindings, layer_names, base, combos, ox, oy, wid
     cv.text(PAD + 30 + tw + 22, oy + 50, how, 20, MUTED, False, align="left")
 
     bx, by = ox, oy + LAYER_HEAD
-    for positions, kind, layer in combos:
-        if layer == index:
-            draw_combo_bracket(cv, sorted(positions, key=lambda p: key_center(p, bx, by)[0]),
-                               "together" if kind == "mo" else "together: toggle", bx, by)
     for i, b in enumerate(bindings):
         k = describe(b, layer_names)
         draw_key(cv, i, bx, by, k, held=held_label if i in held else None)
@@ -589,7 +555,8 @@ def draw(keymap, title, out):
     base = layers[0][1]
 
     width = int(BOARD_W + 2 * PAD + 2 * 30)
-    height = int(HEADER_H + sum(layer_height(i, combos) + LAYER_GAP for i in range(len(layers))) + FOOTER_H)
+    layer_h = LAYER_HEAD + BOARD_H + 24
+    height = int(HEADER_H + len(layers) * (layer_h + LAYER_GAP) + FOOTER_H)
 
     surf = cairo.ImageSurface(cairo.FORMAT_RGB24, width * SCALE, height * SCALE)
     ctx = cairo.Context(surf)
@@ -621,7 +588,7 @@ def draw(keymap, title, out):
     y = HEADER_H
     for i, (name, bindings) in enumerate(layers):
         draw_layer(cv, i, name, bindings, layer_names, base, combos, ox, y, width)
-        y += layer_height(i, combos) + LAYER_GAP
+        y += layer_h + LAYER_GAP
 
     os.makedirs(os.path.dirname(out), exist_ok=True)
     surf.write_to_png(out)

@@ -19,10 +19,29 @@ Firmware is built by GitHub Actions on every push. Download it from the [Actions
 The halves only work with the dongle. If they won't connect after flashing,
 flash `settings_reset` to all three devices, then reflash the normal firmware.
 
+## Keymap
+
+Hold Backspace for Symbols, hold Enter for Navigation, and hold Shift + Z (or `'` + Shift) for Bluetooth.
+Press Esc + Tab together to toggle Qwerty, and both Shifts together to toggle Gaming.
+
+![Every layer of the Cygnus keymap](docs/keymap.png)
+
+A faint grey key does nothing. A dashed key (▽) passes through to the Base layer. The purple key is the one you
+hold (or press, for a toggle) to reach that layer.
+
+The picture is drawn from `config/cygnus.keymap` by `tools/draw-keymap.py`. The `Draw keymap` workflow redraws it
+when the keymap changes: on Forgejo it commits the new picture, on GitHub it only attaches it to the run (a commit
+there would be overwritten by the Forgejo mirror). While the builds run on GitHub, redraw it locally and commit it
+with the keymap change. On NixOS the script fetches its own Python and pycairo; elsewhere it needs `pycairo` and
+the Noto Sans font.
+
+```sh
+tools/draw-keymap.py
+```
+
 ## Keymap Editing
 
-The keymap lives in `config/cygnus.keymap`. A rendered diagram is regenerated
-automatically in `keymap-drawer/cygnus.svg`.
+The keymap lives in `config/cygnus.keymap`.
 
 ### ZMK Studio (Recommended)
 

@@ -1,0 +1,47 @@
+# Redraws docs/keymap.png (tools/draw-keymap.py) when the keymap changes.
+name: Draw keymap
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "config/*.keymap"
+      - "config/info.json"
+      - "tools/draw-keymap.py"
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pycairo and Noto Sans
+        run: |
+          SUDO=$(command -v sudo || true)
+          $SUDO apt-get update
+          $SUDO apt-get install -y --no-install-recommends python3 python3-cairo fonts-noto-core
+
+      - name: Draw the keymap
+        run: python3 tools/draw-keymap.py
+
+      # Forgejo push-mirrors this repo to GitHub, so a commit made on GitHub would be overwritten by the next
+      # mirror sync. On GitHub the picture is only attached to the run; elsewhere (Forgejo) it's committed back.
+      - name: Upload the picture
+        if: github.server_url == 'https://github.com'
+        uses: actions/upload-artifact@v4
+        with:
+          name: keymap
+          path: docs/keymap.png
+
+      - name: Commit the picture
+        if: github.server_url != 'https://github.com'
+        run: |
+          if git diff --quiet -- docs/keymap.png; then
+            echo "docs/keymap.png is already up to date"
+            exit 0
+          fi
+          git config user.name "keymap-drawer[bot]"
+          git config user.email "keymap-drawer@noreply.${GITHUB_SERVER_URL#*://}"
+          git commit -m "Redraw keymap [skip ci]" -- docs/keymap.png
+          git push

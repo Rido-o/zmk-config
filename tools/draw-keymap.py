@@ -489,7 +489,7 @@ def how_to_reach(index, base, layer_names, combos):
     held = [c for c in combos if c[1] == "mo" and c[2] == index]
     if held:
         how = "Hold " + " together, or ".join(keys_together(base, c[0], layer_names) for c in held) + " together"
-        return how, held[0][0], "held"
+        return how, [p for c in held for p in c[0]], "held"
     toggles = [c for c in combos if c[1] == "tog" and c[2] == index]
     if toggles:
         return "Press " + keys_together(base, toggles[0][0], layer_names) + " together to toggle on and off", toggles[0][0], "toggle"

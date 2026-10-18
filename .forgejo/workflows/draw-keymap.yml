@@ -1,4 +1,8 @@
-# Redraws docs/keymap.png (tools/draw-keymap.py) when the keymap changes.
+# Redraws docs/keymap.png (tools/draw-keymap.py) when the keymap changes, and commits it.
+#
+# Placeholder for when the builds move to Forgejo Actions: GitHub doesn't read .forgejo/, so this never runs
+# there. Note that once .forgejo/workflows/ exists, Forgejo ignores .github/workflows/, so build.yml has to move
+# here too. Until then, redraw the picture by hand (see the README).
 name: Draw keymap
 on:
   workflow_dispatch:
@@ -25,17 +29,7 @@ jobs:
       - name: Draw the keymap
         run: python3 tools/draw-keymap.py
 
-      # Forgejo push-mirrors this repo to GitHub, so a commit made on GitHub would be overwritten by the next
-      # mirror sync. On GitHub the picture is only attached to the run; elsewhere (Forgejo) it's committed back.
-      - name: Upload the picture
-        if: github.server_url == 'https://github.com'
-        uses: actions/upload-artifact@v4
-        with:
-          name: keymap
-          path: docs/keymap.png
-
       - name: Commit the picture
-        if: github.server_url != 'https://github.com'
         run: |
           if git diff --quiet -- docs/keymap.png; then
             echo "docs/keymap.png is already up to date"

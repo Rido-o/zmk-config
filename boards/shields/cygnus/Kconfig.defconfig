@@ -24,3 +24,14 @@ config BT_MAX_PAIRED
     default 5
 
 endif
+
+# The halves are always peripherals of the dongle
+if SHIELD_CYGNUS_LEFT || SHIELD_CYGNUS_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default n
+
+endif

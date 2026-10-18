@@ -3,8 +3,6 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-&mt { quick-tap-ms = <150>; };
-
 &lt { quick-tap-ms = <220>; };
 
 / {
@@ -14,6 +12,7 @@
         bluetooth {
             bindings = <&mo 3>;
             key-positions = <41 36>;
+            layers = <0 4>;
         };
 
         qwerty {
@@ -24,6 +23,7 @@
         bluetooth_2 {
             bindings = <&mo 3>;
             key-positions = <42 47>;
+            layers = <0 4>;
         };
 
         gaming {

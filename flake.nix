@@ -66,6 +66,18 @@
 
         flash = zmk-nix.packages.${system}.flash.override {inherit firmware;};
         update = zmk-nix.packages.${system}.update;
+
+        # Runs the working tree's script, which writes docs/keymap.png next to it; bundles its own font so the
+        # picture doesn't depend on the system's fonts
+        draw-keymap = pkgs.writeShellApplication {
+          name = "draw-keymap";
+          runtimeInputs = [(pkgs.python3.withPackages (p: [p.pycairo])) pkgs.git];
+          runtimeEnv.FONTCONFIG_FILE = pkgs.makeFontsConf {fontDirectories = [pkgs.noto-fonts];};
+          text = ''
+            root=$(git rev-parse --show-toplevel)
+            exec python3 "$root/tools/draw-keymap.py" "$@"
+          '';
+        };
       });
 
     devShells = forAllSystems (system: {

@@ -39,11 +39,11 @@ A faint grey key does nothing. A dashed key (▽) passes through to the Base lay
 hold (or press, for a toggle) to reach that layer.
 
 The picture is drawn from `config/cygnus.keymap` by `tools/draw-keymap.py`. Redraw it after changing the keymap
-and commit it along with the change. On NixOS the script fetches its own Python and pycairo; elsewhere it needs
-`pycairo` and the Noto Sans font.
+and commit it along with the change. The flake app brings its own Python, pycairo and Noto Sans, so the picture
+comes out the same on any machine.
 
 ```sh
-tools/draw-keymap.py
+nix run .#draw-keymap
 ```
 
 ## Keymap Editing

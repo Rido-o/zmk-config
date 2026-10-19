@@ -1,8 +1,6 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -i python3 -p "python3.withPackages(p: [p.pycairo])"
 """Draws every layer of config/cygnus.keymap into one PNG (docs/keymap.png).
 
-    tools/draw-keymap.py [keymap [output.png]]
+    nix run .#draw-keymap -- [keymap [output.png]]
 
 The layers, their keys, which key holds which layer, and the layer combos are
 all read from the keymap itself, so the picture cannot drift from the

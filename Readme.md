@@ -7,14 +7,23 @@ Much of the code for this comes from <https://github.com/juhakaup/zmk-cygnus-4x6
 
 ## Firmware
 
-Firmware is built by Forgejo Actions on every push (and by GitHub Actions on the GitHub mirror). Download it from the [Actions tab](../../actions).
+Firmware is built locally with [zmk-nix](https://github.com/lilyinstarlight/zmk-nix) (`flake.nix`). The GitHub
+mirror also builds it with GitHub Actions (`build.yaml`; keep the two lists in sync).
 
-| Build | Flash to |
+```sh
+nix build            # every image, in result/
+nix run .#flash      # flash the dongle and both halves, one at a time
+nix run .#update     # after changing config/west.yml: bump the west dependencies and their hash
+```
+
+The first build downloads ZMK and Zephyr (about 10 minutes); after that only changed images are recompiled.
+
+| Image | Flash to |
 | --- | --- |
-| `cygnus_dongle prospector_adapter` | The Prospector dongle (BLE central, connects to the host over USB/BT) |
-| `cygnus_left` / `cygnus_right` | Each keyboard half (BLE peripherals) |
-| `settings_reset` | Any device, to wipe its pairing/settings before reflashing |
-| `tester_xiao` | A XIAO, for testing the switch wiring |
+| `cygnus_dongle.uf2` (`cygnus_dongle prospector_adapter`) | The Prospector dongle (BLE central, connects to the host over USB/BT) |
+| `cygnus_left.uf2` / `cygnus_right.uf2` | Each keyboard half (BLE peripherals) |
+| `cygnus_settings_reset.uf2` | Any device, to wipe its pairing/settings before reflashing (copy it by hand) |
+| `cygnus_tester.uf2` (`tester_xiao`) | A XIAO, for testing the switch wiring (copy it by hand) |
 
 The halves only work with the dongle. If they won't connect after flashing,
 flash `settings_reset` to all three devices, then reflash the normal firmware.
@@ -49,12 +58,3 @@ Studio is enabled on the dongle only.
 2. Unlock Studio: hold the Bluetooth layer combo (`Shift` + `Z` on the left, or `'` + `Shift` on the right)
    and press the `Studio Unlock` key (top row, 5th from the left)
 3. Open [ZMK Studio](https://zmk.studio/) (web or desktop app) and connect to the keyboard
-
-### Online Keymap Editor
-
-Alternatively, you can edit your keymap using the web-based keymap editor:
-
-1. Visit <https://nickcoutsos.github.io/keymap-editor/>
-2. Edit your keymap visually through the web interface
-3. Commit changes directly through the editor
-4. Download the firmware Forgejo Actions built from the [Actions tab](../../actions)

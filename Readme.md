@@ -7,7 +7,7 @@ Much of the code for this comes from <https://github.com/juhakaup/zmk-cygnus-4x6
 
 ## Firmware
 
-Firmware is built by GitHub Actions on every push. Download it from the [Actions tab](../../actions).
+Firmware is built by Forgejo Actions on every push (and by GitHub Actions on the GitHub mirror). Download it from the [Actions tab](../../actions).
 
 | Build | Flash to |
 | --- | --- |
@@ -57,4 +57,4 @@ Alternatively, you can edit your keymap using the web-based keymap editor:
 1. Visit <https://nickcoutsos.github.io/keymap-editor/>
 2. Edit your keymap visually through the web interface
 3. Commit changes directly through the editor
-4. Download GitHub Actions built firmware from the [Actions tab](../../actions)
+4. Download the firmware Forgejo Actions built from the [Actions tab](../../actions)

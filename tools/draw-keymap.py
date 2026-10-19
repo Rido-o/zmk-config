@@ -54,7 +54,7 @@ def expand_macros(text):
     """Expands the object-like #define macros in `text`, so a layer number or
     a row of keys can be a macro."""
     macros, kept = {}, []
-    for line in text.splitlines():
+    for line in text.replace("\\\n", " ").splitlines():
         m = re.match(r"\s*#define\s+(\w+)(?:\s+(.*))?$", line)
         if m:
             macros[m.group(1)] = (m.group(2) or "").strip()

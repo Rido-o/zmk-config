@@ -1,4 +1,4 @@
-#include "cygnus.dtsi" // Notice that the main dtsi files are included in the overlay.
+#include "cygnus.dtsi"
 
 &kscan0 {
     col-gpios

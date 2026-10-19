@@ -1,5 +1,5 @@
 # Builds the firmware with zmk-nix: `nix build` puts every image in result/, `nix run .#flash` flashes the
-# dongle and both halves. Keep `builds` in sync with build.yaml (still used by GitHub Actions).
+# dongle and both halves.
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -65,7 +65,40 @@
           '';
 
         flash = zmk-nix.packages.${system}.flash.override {inherit firmware;};
-        update = zmk-nix.packages.${system}.update;
+        # Like zmk-nix's updater (which can't find zephyrDepsHash here): moves each west.yml revision to the head of
+        # the branch named in its comment, then refreshes zephyrDepsHash. Every image shares the deps, so any one will do.
+        update = pkgs.writeShellApplication {
+          name = "update";
+          runtimeInputs = [pkgs.git pkgs.yq pkgs.gnused];
+          text = ''
+            root=$(git rev-parse --show-toplevel)
+            west=$root/config/west.yml
+
+            changed=0
+            while IFS=$'\t' read -r url rev; do
+              branch=$(grep -F "$rev" "$west" | sed -n 's/.*# *//p')
+              [ -n "$branch" ] || continue
+              new=$(git ls-remote "$url" "refs/heads/$branch" | cut -f1)
+              [ -n "$new" ] || { echo "no branch '$branch' in $url" >&2; exit 1; }
+              [ "$new" = "$rev" ] && echo "$url: up to date" && continue
+              sed -i "s|$rev|$new|" "$west"
+              echo "$url: ''${rev:0:7} -> ''${new:0:7}"
+              changed=1
+            done < <(
+              # shellcheck disable=SC2016 # $r and $remote are jq variables
+              yq -r '.manifest.remotes as $r | .manifest.projects[] | .remote as $remote
+                | [(($r[] | select(.name == $remote))."url-base" + "/" + (."repo-path" // .name)), .revision] | @tsv' "$west"
+            )
+            [ "$changed" = 1 ] || { echo "nothing to update"; exit 0; }
+
+            cur=$(nix eval --raw "$root#dongle.westDeps.outputHash")
+            drv=$(nix eval --raw "$root#dongle.westDeps" --apply 'd: (d.overrideAttrs { outputHash = "${lib.fakeHash}"; }).drvPath')
+            new=$(nix build --no-link "$drv^*" 2>&1 | sed -n 's/^ *got: *//p' || true)
+            [ -n "$new" ] || { echo "could not compute the new zephyrDepsHash" >&2; exit 1; }
+            sed -i "s|$cur|$new|" "$root/flake.nix"
+            echo "zephyrDepsHash: $new"
+          '';
+        };
 
         # Runs the working tree's script, which writes docs/keymap.png next to it; bundles its own font so the
         # picture doesn't depend on the system's fonts

@@ -7,16 +7,20 @@ Much of the code for this comes from <https://github.com/juhakaup/zmk-cygnus-4x6
 
 ## Firmware
 
-Firmware is built locally with [zmk-nix](https://github.com/lilyinstarlight/zmk-nix) (`flake.nix`). The GitHub
-mirror also builds it with GitHub Actions (`build.yaml`; keep the two lists in sync).
+Firmware is built locally with [zmk-nix](https://github.com/lilyinstarlight/zmk-nix) (`flake.nix`).
 
 ```sh
 nix build            # every image, in result/
 nix run .#flash      # flash the dongle and both halves, one at a time
-nix run .#update     # after changing config/west.yml: bump the west dependencies and their hash
+nix run .#update     # move ZMK and the modules to their branch heads, and refresh the deps hash
 ```
 
 The first build downloads ZMK and Zephyr (about 10 minutes); after that only changed images are recompiled.
+
+`update` follows the branch named in the comment after each `revision:` in `config/west.yml` (`# main`), so keep
+those comments to just the branch name. When it moves something it re-downloads the dependencies to work out the
+new `zephyrDepsHash` (several minutes); the next `nix build` then reuses that download. To pin a revision by hand
+instead, edit it in `west.yml` and run `update` too, or set the hash from the error the next build prints.
 
 | Image | Flash to |
 | --- | --- |

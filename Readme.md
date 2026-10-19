@@ -38,13 +38,17 @@ Press Esc + Tab together to toggle Qwerty, and both Shifts together to toggle Ga
 A faint grey key does nothing. A dashed key (▽) passes through to the Base layer. The purple key is the one you
 hold (or press, for a toggle) to reach that layer.
 
-The picture is drawn from `config/cygnus.keymap` by `tools/draw-keymap.py`. Redraw it after changing the keymap
-and commit it along with the change. The flake app brings its own Python, pycairo and Noto Sans, so the picture
-comes out the same on any machine.
+The picture is drawn from `config/cygnus.keymap` by `tools/draw-keymap.py`. A pre-commit hook redraws it and
+adds it to any commit that changes the keymap, `config/info.json`, the script or `flake.lock`. Enable it once per
+clone:
 
 ```sh
-nix run .#draw-keymap
+git config core.hooksPath .githooks
 ```
+
+To redraw by hand, run `nix run .#draw-keymap`. It brings its own Python, pycairo and Noto Sans, so the picture
+comes out the same on any machine. The hook draws from the working tree, so with only part of a keymap change
+staged, the picture shows the unstaged part too.
 
 ## Keymap Editing
 

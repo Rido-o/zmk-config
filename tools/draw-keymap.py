@@ -23,51 +23,12 @@ KEYBOARDS = {  # keymap -> (title, output)
     "cygnus": ("Dactyl Cygnus 4×6", os.path.join(REPO, "docs", "keymap.png")),
 }
 
-# --------------------------------------------------------------------------
-# Physical layouts, in hundredths of a key: (x, y, w, h, rotation in degrees,
-# pivot x, pivot y), in key-position order.
-# --------------------------------------------------------------------------
-
-# Corne: ZMK's foostan_corne_5col_layout (zmk/app/dts/layouts/foostan/corne/
-# 5column.dtsi). Only its thumb fan is used, under the Cygnus's halves.
-_LEFT = [(0, 37), (100, 12), (200, 0), (300, 12), (400, 24)]    # x, y of each column
-_RIGHT = [(700, 24), (800, 12), (900, 0), (1000, 12), (1100, 37)]
-CORNE = []
-for _row in range(3):
-    CORNE += [(x, _row * 100 + y, 100, 100, 0, 0, 0) for x, y in _LEFT + _RIGHT]
-CORNE += [
-    (250, 312, 100, 100, 0, 0, 0),
-    (350, 312, 100, 100, 12, 350, 412),
-    (448, 283, 100, 150, 24, 448, 433),
-    (652, 283, 100, 150, -24, 752, 433),
-    (750, 312, 100, 100, -12, 850, 412),
-    (850, 312, 100, 100, 0, 0, 0),
-]
-
-
-def cygnus_layout():
-    """The Cygnus's 4x6 main keys, as config/info.json places them; its
-    thumbs are drawn as the Corne's fan under each half (info.json's thumb
-    rotations don't resolve to a sensible picture, so this part is only
-    approximate)."""
-    import json
-    info = json.load(open(os.path.join(CONFIG, "info.json")))
-    main = [k for k in info["layouts"]["default_transform"]["layout"] if k["row"] < 4]
-    main.sort(key=lambda k: (k["row"], k["x"]))
-    keys = [(round(k["x"] * 100), round(k["y"] * 100), 100, 100, 0, 0, 0) for k in main]
-    thumbs = CORNE[30:]
-    left = [(x + 100, y + 100, w, h, r, rx + 100 if rx else 0, ry + 100 if ry else 0) for x, y, w, h, r, rx, ry in thumbs[:3]]
-    right = [(x + 200, y + 100, w, h, r, rx + 200 if rx else 0, ry + 100 if ry else 0) for x, y, w, h, r, rx, ry in thumbs[3:]]
-    return keys + left + right
-
-
-LAYOUTS = {36: CORNE}   # by number of keys; the Cygnus (54) is added on demand
-KEYS = CORNE
+# The physical layout the firmware (and ZMK Studio) uses
+LAYOUT = os.path.join(REPO, "boards", "shields", "cygnus", "cygnus-layout.dtsi")
 
 # --------------------------------------------------------------------------
 # Parsing the keymap
 # --------------------------------------------------------------------------
-
 
 
 def read_with_includes(path, seen=None):
@@ -113,11 +74,37 @@ def expand_macros(text):
     return text
 
 
+def read_layout(path):
+    """The keys of the physical layout in `path`, in key-position order, as
+    (x, y, w, h, rotation in degrees, pivot x, pivot y) in hundredths of a key."""
+    keys = []
+    for m in re.finditer(r"<&key_physical_attrs([^>]*)>", read_with_includes(path)):
+        w, h, x, y, rot, rx, ry = (int(n.strip("()")) for n in m.group(1).split())
+        keys.append((x, y, w, h, rot / 100, rx, ry))
+    return keys
+
+
+def parse_behaviors(text):
+    """The keymap's own hold-taps and macros, as (hold_taps, macros):
+    hold_taps = {name: behavior its hold binds ("kp" or "mo")} and macros =
+    {name: display-name}."""
+    hold_taps, macros = {}, {}
+    for name, body in re.findall(r"(\w+)\s*:\s*[\w-]+\s*\{([^{}]*)\}", text):
+        if '"zmk,behavior-hold-tap"' in body:
+            hold_taps[name] = re.search(r"bindings\s*=\s*<&(\w+)>", body).group(1)
+        elif '"zmk,behavior-macro"' in body:
+            m = re.search(r'display-name\s*=\s*"([^"]+)"', body)
+            if m:
+                macros[name] = m.group(1)
+    return hold_taps, macros
+
+
 def parse_keymap(path):
-    """Returns (layers, combos): layers = [(display name, [binding ...]), ...]
-    where a binding is a list (its behavior without the &, then its
-    arguments), and combos = [([positions], "mo" or "tog", layer number)] for
-    the combos that switch layers."""
+    """Returns (layers, combos, hold_taps, macros): layers = [(display name,
+    [binding ...]), ...] where a binding is a list (its behavior without the
+    &, then its arguments), combos = [([positions], "mo" or "tog", layer
+    number)] for the combos that switch layers, and hold_taps and macros are
+    as parse_behaviors returns them."""
     text = expand_macros(read_with_includes(path))
     layers = []
     for m in re.finditer(r'(\w+)\s*\{\s*display-name\s*=\s*"([^"]+)";.*?bindings\s*=\s*<(.*?)>;', text, re.S):
@@ -130,7 +117,7 @@ def parse_keymap(path):
         p = re.search(r"key-positions\s*=\s*<([^>]*)>", body)
         if b and p:
             combos.append(([int(n) for n in p.group(1).split()], b.group(1), int(b.group(2))))
-    return layers, combos
+    return (layers, combos, *parse_behaviors(text))
 
 
 # --------------------------------------------------------------------------
@@ -166,7 +153,8 @@ MODS = {"LCTRL": "Ctrl", "RCTRL": "Ctrl", "LSHFT": "Shift", "RSHFT": "Shift",
         "LALT": "Alt", "RALT": "Alt", "LGUI": "Gui", "RGUI": "Gui"}
 MOUSE = {"LCLK": "L-Click", "MCLK": "M-Click", "RCLK": "R-Click",
          "MOVE_UP": "Ms ↑", "MOVE_DOWN": "Ms ↓", "MOVE_LEFT": "Ms ←", "MOVE_RIGHT": "Ms →"}
-HOLD_TAPS = {"hml", "hmr", "mt"}  # &name MOD KEY
+# &name HOLD TAP -> what the hold binds; draw() adds the keymap's own hold-taps
+HOLD_TAPS = {"mt": "kp", "lt": "mo"}
 
 # ZMK's other spellings of the codes above, and the already-shifted symbols
 ALIASES = {
@@ -189,7 +177,7 @@ KEYS_LEGEND.update({
     "LEFT_BRACE": ("{", "symbol"), "LBRC": ("{", "symbol"), "RIGHT_BRACE": ("}", "symbol"), "RBRC": ("}", "symbol"),
     "PIPE": ("|", "symbol"), "QUESTION": ("?", "symbol"), "QMARK": ("?", "symbol"),
 })
-MACROS = {"arrow": "->", "fat_arrow": "=>"}  # the keymap's macros, drawn as what they type
+MACROS = {}  # the keymap's macros, drawn as their display-name; filled in by draw()
 
 
 def legend(code):
@@ -216,12 +204,12 @@ def describe(binding, layer_names):
         key["main"], key["kind"], key["shifted"] = legend(args[0])
     elif name in HOLD_TAPS:
         key["main"], key["kind"], key["shifted"] = legend(args[1])
-        mod = ALIASES.get(args[0], args[0])
-        key["hold"], key["hold_kind"] = MODS.get(mod, mod), "mod"
-    elif name in ("lt", "ltr"):
-        key["main"], key["kind"], key["shifted"] = legend(args[1])
-        key["hold"], key["hold_kind"] = layer_names[args[0]], "layer"
-        key["layer"] = args[0]
+        if HOLD_TAPS[name] == "mo":
+            key["hold"], key["hold_kind"] = layer_names[args[0]], "layer"
+            key["layer"] = args[0]
+        else:
+            mod = ALIASES.get(args[0], args[0])
+            key["hold"], key["hold_kind"] = MODS.get(mod, mod), "mod"
     elif name == "mkp":
         key["main"], key["kind"] = MOUSE[args[0]], "mouse"
     elif name == "mmv":
@@ -259,6 +247,7 @@ LAYER_HEAD = 78
 LAYER_GAP = 34
 HEADER_H = 270
 FOOTER_H = 26
+KEYS = []
 BOARD_W = BOARD_H = 0  # set per keyboard by use_layout()
 
 
@@ -486,7 +475,7 @@ def how_to_reach(index, base, layer_names, combos):
     """(subtitle, held positions, label on the held keys) for layer `index`."""
     if index == 0:
         return "Default layer. Top of each key: tap. Bottom: hold.", [], None
-    taps = [p for p, b in enumerate(base) if b[0] in ("lt", "ltr") and b[1] == str(index)]
+    taps = [p for p, b in enumerate(base) if describe(b, layer_names)["layer"] == str(index)]
     if taps:
         return "Hold " + spoken(describe(base[taps[0]], layer_names)["main"]), taps, "held"
     held = [c for c in combos if c[1] == "mo" and c[2] == index]
@@ -547,13 +536,14 @@ def draw_legend(cv, right, top, shown_kinds):
 
 
 def draw(keymap, title, out):
-    layers, combos = parse_keymap(keymap)
+    layers, combos, hold_taps, macros = parse_keymap(keymap)
+    HOLD_TAPS.update(hold_taps)
+    MACROS.update(macros)
     n_keys = len(layers[0][1])
-    if n_keys not in LAYOUTS:
-        LAYOUTS[n_keys] = cygnus_layout() if n_keys == 54 else None
-    if not LAYOUTS[n_keys]:
-        sys.exit(f"{keymap}: no physical layout for {n_keys} keys")
-    use_layout(LAYOUTS[n_keys])
+    keys = read_layout(LAYOUT)
+    if len(keys) != n_keys:
+        sys.exit(f"{keymap}: {n_keys} keys, but {os.path.relpath(LAYOUT, REPO)} has {len(keys)}")
+    use_layout(keys)
     layer_names = {str(i): name for i, (name, _) in enumerate(layers)}
     base = layers[0][1]
 

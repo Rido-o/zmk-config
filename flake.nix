@@ -41,7 +41,7 @@
         buildKeyboard ({
             # Shared by every image, so they reuse one download of the west dependencies
             name = "cygnus";
-            src = lib.sourceFilesBySuffices self [".board" ".cmake" ".conf" ".defconfig" ".dts" ".dtsi" ".json" ".keymap" ".overlay" ".shield" ".yml" "_defconfig"];
+            src = lib.sourceFilesBySuffices self [".board" ".cmake" ".conf" ".defconfig" ".dts" ".dtsi" ".keymap" ".overlay" ".shield" ".yml" "_defconfig"];
             board = "xiao_ble//zmk";
             # `nix run .#update` refreshes this after changing config/west.yml
             zephyrDepsHash = "sha256-CQl2JLtNrCrB+G7NwiQTzgbKIYi3t7R+uxnbfVbZ0oQ=";

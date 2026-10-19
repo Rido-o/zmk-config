@@ -42,9 +42,9 @@ Press Esc + Tab together to toggle Qwerty, and both Shifts together to toggle Ga
 A faint grey key does nothing. A dashed key (▽) passes through to the Base layer. The purple key is the one you
 hold (or press, for a toggle) to reach that layer.
 
-The picture is drawn from `config/cygnus.keymap` by `tools/draw-keymap.py`. A pre-commit hook redraws it and
-adds it to any commit that changes the keymap, `config/info.json`, the script or `flake.lock`. Enable it once per
-clone:
+The picture is drawn from `config/cygnus.keymap` and the physical layout in `boards/shields/cygnus/cygnus-layout.dtsi`
+by `tools/draw-keymap.py`. A pre-commit hook redraws it and adds it to any commit that changes either of those, the
+script or `flake.lock`. Enable it once per clone:
 
 ```sh
 git config core.hooksPath .githooks

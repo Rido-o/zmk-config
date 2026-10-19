@@ -3,7 +3,7 @@
 # Enable once per clone: git config core.hooksPath .githooks
 set -euo pipefail
 
-if git diff --cached --name-only | grep -qE '^(config/.*\.(keymap|dtsi|h)|config/info\.json|tools/draw-keymap\.py|flake\.lock)$'; then
+if git diff --cached --name-only | grep -qE '^(config/.*\.(keymap|dtsi|h)|boards/shields/cygnus/cygnus-layout\.dtsi|tools/draw-keymap\.py|flake\.lock)$'; then
   echo "pre-commit: redrawing docs/keymap.png"
   nix run .#draw-keymap
   git add docs/keymap.png

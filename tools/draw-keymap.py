@@ -18,11 +18,9 @@ import cairo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
-CONFIG = os.path.join(REPO, "config")
-KEYBOARDS = {  # keymap -> (title, output)
-    "cygnus": ("Dactyl Cygnus 4×6", os.path.join(REPO, "docs", "keymap.png")),
-}
-
+TITLE = "Dactyl Cygnus 4×6"
+KEYMAP = os.path.join(REPO, "config", "cygnus.keymap")
+OUTPUT = os.path.join(REPO, "docs", "keymap.png")
 # The physical layout the firmware (and ZMK Studio) uses
 LAYOUT = os.path.join(REPO, "boards", "shields", "cygnus", "cygnus-layout.dtsi")
 
@@ -143,6 +141,18 @@ KEYS_LEGEND = {
     "C_PREV": ("Prev", "media"), "C_STOP": ("Stop", "media"), "C_PP": ("Play", "media"),
     "C_NEXT": ("Next", "media"), "C_BRI_DN": ("Bri −", "media"), "C_BRI_UP": ("Bri +", "media"),
     "C_VOL_DN": ("Vol −", "media"), "C_VOL_UP": ("Vol +", "media"),
+    # the already-shifted symbols
+    "EXCLAMATION": ("!", "symbol"), "EXCL": ("!", "symbol"), "AT_SIGN": ("@", "symbol"), "AT": ("@", "symbol"),
+    "POUND": ("#", "symbol"), "HASH": ("#", "symbol"), "DOLLAR": ("$", "symbol"), "DLLR": ("$", "symbol"),
+    "PERCENT": ("%", "symbol"), "PRCNT": ("%", "symbol"), "CARET": ("^", "symbol"),
+    "AMPERSAND": ("&", "symbol"), "AMPS": ("&", "symbol"), "ASTERISK": ("*", "symbol"), "ASTRK": ("*", "symbol"),
+    "LEFT_PARENTHESIS": ("(", "symbol"), "LPAR": ("(", "symbol"),
+    "RIGHT_PARENTHESIS": (")", "symbol"), "RPAR": (")", "symbol"),
+    "UNDERSCORE": ("_", "symbol"), "UNDER": ("_", "symbol"), "PLUS": ("+", "symbol"),
+    "TILDE": ("~", "symbol"), "COLON": (":", "symbol"), "DOUBLE_QUOTES": ('"', "symbol"), "DQT": ('"', "symbol"),
+    "LESS_THAN": ("<", "symbol"), "LT": ("<", "symbol"), "GREATER_THAN": (">", "symbol"), "GT": (">", "symbol"),
+    "LEFT_BRACE": ("{", "symbol"), "LBRC": ("{", "symbol"), "RIGHT_BRACE": ("}", "symbol"), "RBRC": ("}", "symbol"),
+    "PIPE": ("|", "symbol"), "QUESTION": ("?", "symbol"), "QMARK": ("?", "symbol"),
 }
 SHIFTED = {
     "N1": "!", "N2": "@", "N3": "#", "N4": "$", "N5": "%", "N6": "^", "N7": "&", "N8": "*",
@@ -156,7 +166,7 @@ MOUSE = {"LCLK": "L-Click", "MCLK": "M-Click", "RCLK": "R-Click",
 # &name HOLD TAP -> what the hold binds; draw() adds the keymap's own hold-taps
 HOLD_TAPS = {"mt": "kp", "lt": "mo"}
 
-# ZMK's other spellings of the codes above, and the already-shifted symbols
+# ZMK's other spellings of the codes above
 ALIASES = {
     "LEFT_CONTROL": "LCTRL", "RIGHT_CONTROL": "RCTRL", "LEFT_SHIFT": "LSHFT", "RIGHT_SHIFT": "RSHFT",
     "LEFT_ALT": "LALT", "RIGHT_ALT": "RALT", "LEFT_GUI": "LGUI", "RIGHT_GUI": "RGUI",
@@ -164,19 +174,6 @@ ALIASES = {
     "DELETE": "DEL", "ESCAPE": "ESC", "SINGLE_QUOTE": "SQT", "APOS": "SQT", "SEMICOLON": "SEMI",
     "PERIOD": "DOT", "LEFT_BRACKET": "LBKT", "RIGHT_BRACKET": "RBKT",
 }
-KEYS_LEGEND.update({
-    "EXCLAMATION": ("!", "symbol"), "EXCL": ("!", "symbol"), "AT_SIGN": ("@", "symbol"), "AT": ("@", "symbol"),
-    "POUND": ("#", "symbol"), "HASH": ("#", "symbol"), "DOLLAR": ("$", "symbol"), "DLLR": ("$", "symbol"),
-    "PERCENT": ("%", "symbol"), "PRCNT": ("%", "symbol"), "CARET": ("^", "symbol"),
-    "AMPERSAND": ("&", "symbol"), "AMPS": ("&", "symbol"), "ASTERISK": ("*", "symbol"), "ASTRK": ("*", "symbol"),
-    "LEFT_PARENTHESIS": ("(", "symbol"), "LPAR": ("(", "symbol"),
-    "RIGHT_PARENTHESIS": (")", "symbol"), "RPAR": (")", "symbol"),
-    "UNDERSCORE": ("_", "symbol"), "UNDER": ("_", "symbol"), "PLUS": ("+", "symbol"),
-    "TILDE": ("~", "symbol"), "COLON": (":", "symbol"), "DOUBLE_QUOTES": ('"', "symbol"), "DQT": ('"', "symbol"),
-    "LESS_THAN": ("<", "symbol"), "LT": ("<", "symbol"), "GREATER_THAN": (">", "symbol"), "GT": (">", "symbol"),
-    "LEFT_BRACE": ("{", "symbol"), "LBRC": ("{", "symbol"), "RIGHT_BRACE": ("}", "symbol"), "RBRC": ("}", "symbol"),
-    "PIPE": ("|", "symbol"), "QUESTION": ("?", "symbol"), "QMARK": ("?", "symbol"),
-})
 MACROS = {}  # the keymap's macros, drawn as their display-name; filled in by draw()
 
 
@@ -248,7 +245,7 @@ LAYER_GAP = 34
 HEADER_H = 270
 FOOTER_H = 26
 KEYS = []
-BOARD_W = BOARD_H = 0  # set per keyboard by use_layout()
+BOARD_W = BOARD_H = 0  # set by use_layout()
 
 
 def use_layout(keys):
@@ -535,7 +532,7 @@ def draw_legend(cv, right, top, shown_kinds):
     return w, h
 
 
-def draw(keymap, title, out):
+def draw(keymap, out):
     layers, combos, hold_taps, macros = parse_keymap(keymap)
     HOLD_TAPS.update(hold_taps)
     MACROS.update(macros)
@@ -565,7 +562,7 @@ def draw(keymap, title, out):
     cv = Canvas(ctx)
 
     # header: title at the left, colour key in the top-right corner
-    cv.text(PAD, 78, title, 46, INK, True, align="left")
+    cv.text(PAD, 78, TITLE, 46, INK, True, align="left")
     rel = os.path.relpath(keymap, REPO)
     cv.text(PAD, 112, f"Layers of {rel} · {n_keys} keys, tap and hold", 20, MUTED, False, align="left")
     kinds = []
@@ -589,14 +586,10 @@ def draw(keymap, title, out):
 
 
 def main():
-    if len(sys.argv) > 1:
-        keymap = sys.argv[1]
-        name = os.path.splitext(os.path.basename(keymap))[0]
-        title, out = KEYBOARDS.get(name, (name, os.path.splitext(keymap)[0] + ".png"))
-        draw(keymap, title, sys.argv[2] if len(sys.argv) > 2 else out)
-    else:
-        for name, (title, out) in KEYBOARDS.items():
-            draw(os.path.join(CONFIG, name + ".keymap"), title, out)
+    keymap = sys.argv[1] if len(sys.argv) > 1 else KEYMAP
+    # another keymap is drawn next to itself, not over docs/keymap.png
+    out = OUTPUT if keymap == KEYMAP else os.path.splitext(keymap)[0] + ".png"
+    draw(keymap, sys.argv[2] if len(sys.argv) > 2 else out)
 
 
 if __name__ == "__main__":

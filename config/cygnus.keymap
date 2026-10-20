@@ -71,6 +71,20 @@
             #binding-cells = <0>;
             bindings = <&kp EQUAL &kp GREATER_THAN>;
         };
+
+        path_sep: path_sep {
+            compatible = "zmk,behavior-macro";
+            display-name = "::";
+            #binding-cells = <0>;
+            bindings = <&kp COLON &kp COLON>;
+        };
+
+        attr: attr {
+            compatible = "zmk,behavior-macro";
+            display-name = "#[";
+            #binding-cells = <0>;
+            bindings = <&kp POUND &kp LBKT>;
+        };
     };
 
     keymap {
@@ -91,10 +105,10 @@
             display-name = "Symbols";
             bindings = <
 &trans  &trans           &trans         &trans            &trans     &trans           &trans       &trans                &trans                 &trans      &trans             &trans
-&trans  &kp QUESTION     &kp LESS_THAN  &kp GREATER_THAN  &kp MINUS  &kp PIPE         &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR  &kp UNDERSCORE     &trans
-&trans  &kp EXCLAMATION  &kp ASTERISK   &kp AMPERSAND     &kp EQUAL  &kp FSLH         &kp POUND    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp SEMI    &kp DOUBLE_QUOTES  &trans
-&trans  &kp TILDE        &kp PLUS       &kp LBKT          &kp RBKT   &kp PERCENT      &kp AT_SIGN  &kp COLON             &kp COMMA              &kp DOT     &kp SQT            &trans
-                                        &trans            &trans     &trans           &arrow       &kp UNDERSCORE        &fat_arrow
+&trans  &kp QUESTION     &kp LESS_THAN  &kp GREATER_THAN  &kp MINUS  &path_sep        &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR  &kp GRAVE          &trans
+&trans  &kp EXCLAMATION  &kp ASTERISK   &kp AMPERSAND     &kp EQUAL  &kp FSLH         &kp POUND    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE    &kp UNDERSCORE     &trans
+&trans  &kp TILDE        &kp PLUS       &kp LBKT          &kp RBKT   &kp PERCENT      &kp AT_SIGN  &fat_arrow            &arrow                 &kp BSLH    &attr              &trans
+                                        &trans            &trans     &trans           &trans       &trans                &trans
             >;
         };
 

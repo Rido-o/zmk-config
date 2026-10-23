@@ -78,13 +78,6 @@
             #binding-cells = <0>;
             bindings = <&kp COLON &kp COLON>;
         };
-
-        attr: attr {
-            compatible = "zmk,behavior-macro";
-            display-name = "#[";
-            #binding-cells = <0>;
-            bindings = <&kp POUND &kp LBKT>;
-        };
     };
 
     keymap {
@@ -104,11 +97,11 @@
         symbols {
             display-name = "Symbols";
             bindings = <
-&trans  &trans           &trans         &trans            &trans     &trans           &trans       &trans                &trans                 &trans      &trans             &trans
-&trans  &kp QUESTION     &kp LESS_THAN  &kp GREATER_THAN  &kp MINUS  &path_sep        &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR  &kp GRAVE          &trans
-&trans  &kp EXCLAMATION  &kp ASTERISK   &kp AMPERSAND     &kp EQUAL  &kp FSLH         &kp POUND    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp PIPE    &kp UNDERSCORE     &trans
-&trans  &kp TILDE        &kp PLUS       &kp LBKT          &kp RBKT   &kp PERCENT      &kp AT_SIGN  &fat_arrow            &arrow                 &kp BSLH    &attr              &trans
-                                        &trans            &trans     &trans           &trans       &trans                &trans
+&trans  &trans           &trans         &trans            &trans     &trans           &trans       &trans                &trans                 &trans          &trans     &trans
+&trans  &kp TILDE        &none          &none             &none      &none            &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR      &kp GRAVE  &trans
+&trans  &kp EXCLAMATION  &kp QUESTION   &kp AMPERSAND     &kp EQUAL  &kp MINUS        &kp POUND    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp UNDERSCORE  &kp PIPE   &trans
+&trans  &kp ASTERISK     &kp PLUS       &kp LBKT          &kp RBKT   &kp PERCENT      &kp AT_SIGN  &kp LESS_THAN         &kp GREATER_THAN       &kp BSLH        &none      &trans
+                                        &trans            &trans     &trans           &path_sep    &arrow                &fat_arrow
             >;
         };
 

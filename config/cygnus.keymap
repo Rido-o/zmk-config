@@ -58,20 +58,6 @@
     };
 
     macros {
-        arrow: arrow {
-            compatible = "zmk,behavior-macro";
-            display-name = "->";
-            #binding-cells = <0>;
-            bindings = <&kp MINUS &kp GREATER_THAN>;
-        };
-
-        fat_arrow: fat_arrow {
-            compatible = "zmk,behavior-macro";
-            display-name = "=>";
-            #binding-cells = <0>;
-            bindings = <&kp EQUAL &kp GREATER_THAN>;
-        };
-
         path_sep: path_sep {
             compatible = "zmk,behavior-macro";
             display-name = "::";
@@ -98,10 +84,10 @@
             display-name = "Symbols";
             bindings = <
 &trans  &trans           &trans         &trans            &trans     &trans           &trans       &trans                &trans                 &trans          &trans     &trans
-&trans  &kp TILDE        &none          &none             &none      &none            &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR      &kp GRAVE  &trans
+&trans  &kp TILDE        &none          &kp DQT           &none      &none            &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR      &kp GRAVE  &trans
 &trans  &kp EXCLAMATION  &kp QUESTION   &kp AMPERSAND     &kp EQUAL  &kp MINUS        &kp POUND    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp UNDERSCORE  &kp PIPE   &trans
 &trans  &kp ASTERISK     &kp PLUS       &kp LBKT          &kp RBKT   &kp PERCENT      &kp AT_SIGN  &kp LESS_THAN         &kp GREATER_THAN       &kp BSLH        &none      &trans
-                                        &trans            &trans     &trans           &path_sep    &arrow                &fat_arrow
+                                        &trans            &trans     &trans           &path_sep    &trans                &trans
             >;
         };
 

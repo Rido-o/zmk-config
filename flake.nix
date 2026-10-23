@@ -64,7 +64,15 @@
               images)}
           '';
 
-        flash = zmk-nix.packages.${system}.flash.override {inherit firmware;};
+        # zmk-nix's flasher, with a desktop notification when it starts (once the firmware has finished building)
+        flash = pkgs.writeShellApplication {
+          name = "flash";
+          runtimeInputs = [pkgs.libnotify];
+          text = ''
+            notify-send --app-name=zmk-config "Cygnus firmware built" "Ready to flash" || true
+            exec ${lib.getExe (zmk-nix.packages.${system}.flash.override {inherit firmware;})} "$@"
+          '';
+        };
         # Moves ZMK and the modules to their branch heads and refreshes zephyrDepsHash; see tools/update.sh
         update = pkgs.writeShellApplication {
           name = "update";

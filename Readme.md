@@ -11,7 +11,7 @@ Firmware is built locally with [zmk-nix](https://github.com/lilyinstarlight/zmk-
 
 ```sh
 nix build            # every image, in result/
-nix run .#flash      # flash the dongle and both halves, one at a time
+nix run .#flash      # flash the dongle and both halves, one at a time (notifies when the build is done)
 nix run .#update     # move ZMK and the modules to their branch heads, and refresh the deps hash
 ```
 

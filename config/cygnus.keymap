@@ -84,7 +84,7 @@
             display-name = "Symbols";
             bindings = <
 &trans  &trans           &trans         &trans            &trans     &trans           &trans       &trans                &trans                 &trans          &trans     &trans
-&trans  &kp TILDE        &none          &kp DQT           &none      &none            &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR      &kp GRAVE  &trans
+&trans  &kp TILDE        &none          &kp DQT           &kp COLON  &none            &kp CARET    &kp LEFT_BRACE        &kp RIGHT_BRACE        &kp DOLLAR      &kp GRAVE  &trans
 &trans  &kp EXCLAMATION  &kp QUESTION   &kp AMPERSAND     &kp EQUAL  &kp MINUS        &kp POUND    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp UNDERSCORE  &kp PIPE   &trans
 &trans  &kp ASTERISK     &kp PLUS       &kp LBKT          &kp RBKT   &kp PERCENT      &kp AT_SIGN  &kp LESS_THAN         &kp GREATER_THAN       &kp BSLH        &none      &trans
                                         &trans            &trans     &trans           &path_sep    &trans                &trans
